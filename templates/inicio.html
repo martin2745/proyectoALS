@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contenido %}
+        <h3 id="gestionesGoodReads">Gestiones de GoodReads</h3>
+        <div id="dvMenu" class="w3-panel w3-border">
+        <table class="w3-table-all">
+            <tr>
+                <th>Nombre: {{ usr.name }}</th>
+                <th class="w3-center">Usuario: {{ usr.username }}</th>
+                <th></th>
+                <th class="w3-right-align"><a href="/logout">Cerrar la sesión</a></th>
+            </tr>
+            <tr>
+                <th><a href="/lista_resenhas">Listado Reseñas</a></th>
+                <td colspan="3" rowspan="3" bgcolor="white">{% block listado %} {% endblock %}</td>
+            </tr>
+            <tr>
+                <th><a href="/lista_libros">Listado Libros</a></th>
+            </tr>
+        </table>
+
+    </div>
+{% endblock %}

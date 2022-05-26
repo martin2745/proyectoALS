@@ -1,0 +1,85 @@
+{% extends "inicio.html" %}
+{% block listado %}
+    <button href="#" onclick="abrirFormCreaResenha()">Añadir reseña</button>
+    <div id="dvListaLibros">
+        {% if resenhas %}
+            <table class="default">
+                <tr>
+                    <th>Libro</th>
+                    <th>Usuario</th>
+                    <th>Enlace</th>
+                    <th>Opinión</th>
+                </tr>
+                {% for resenha in resenhas %}
+                    <tr>
+                        <td>{{ resenha.titulo }}</td>
+                        <td>{{ resenha.usuario }}</td>
+                        <td><a href="{{ resenha.url }}">Click Aquí!</a></td>
+                        <td>
+                            <button type="button" data-toggle="modal" data-target="#myModal{{ resenhas_oids[resenha.__oid__]  }}">Consultar
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        {% else %}
+            <p> No hay resenhas guardadas. </p>
+        {% endif %}
+    </div>
+    <!-- Modal -->
+    {% for resenha in resenhas %}
+
+        <div class="modal fade" id="myModal{{ resenhas_oids[resenha.__oid__]  }}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Opinion de "{{ usr.name }} sobre {{ resenha.titulo }}"</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ resenha.opinion }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div id="dvCreaResenha" style="display: None;" class="w3-panel w3-border">
+        <form id="dvCreaResenhaForm" name="dvCreaResenhaForm"
+              method="post"
+              action="/guarda_resenha">
+
+            <label for="edTitulo">Titulo</label><br>
+            <input type="text" id="edTitulo" name="edTitulo"/>
+            <br/>
+
+            <label for="edUrl">Url</label><br>
+            <input type="text" id="edUrl" name="edUrl"/>
+            <p/>
+
+            <label for="edOpinion">Opinion</label><br>
+            <textarea name="edOpinion" cols="40" rows="5"></textarea>
+            <br/>
+
+            <input type="submit" value="Guardar">
+        </form>
+        <button href="#" onclick="cerrarFormCreaResenha()">Cancelar</button>
+    </div>
+    <div id="dvErrores" style="font-weight: bold; color:white; background-color: red">
+        {% with msgs = get_flashed_messages() %}
+            {% if msgs %}
+                <ul>
+                    {% for msg in msgs %}
+                        <li> {{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+{% endblock %}

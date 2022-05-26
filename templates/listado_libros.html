@@ -1,0 +1,131 @@
+{% extends "inicio.html" %}
+{% block listado %}
+    <button href="#" onclick="abrirFormCreaLibro()">Añadir libro</button>
+    <div id="dvListaLibros">
+        {% if libros %}
+            <table class="default">
+                <tr>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
+                    <th>Argumento</th>
+                    <th>Url</th>
+                    <th>Acciones</th>
+                </tr>
+                {% for libro in libros %}
+                    <tr>
+                        <td>{{ libro.titulo }}</td>
+                        <td>{{ libro.autor }}</td>
+                        <td>{{ libro.isbn }}</td>
+                        <td>
+                            <button type="button" data-toggle="modal" data-target="#myModal{{ libro.isbn }}">Consultar      <!--cambiar isbn por oid-->
+                            </button>
+                        </td>
+                        <td><a href="{{ libro.url }}">Click Aquí!</a></td>
+                        <td>
+                            <button href="#" onclick="eliminarLibro('{{ libro.__oid__ }}')">Eliminar</button>
+                            <button href="#"
+                                    onclick="editarLibro('{{ libro.titulo }}','{{ libro.autor }}','{{ libro.isbn }}', '{{ libro.argumento }}', '{{ libro.url }}', '{{ libros_oids[libro.__oid__] }}')">
+                                Editar
+                            </button>
+                            <button href="#" onclick="abrirFormCreaResenhaVistaLibro(' {{ libro.titulo }} ')">Reseñar</button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        {% else %}
+            <p> No hay libros guardados. </p>
+        {% endif %}
+    </div>
+
+    <!-- Modal -->
+    {% for libro in libros %}
+
+        <div class="modal fade" id="myModal{{ libro.isbn }}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Argumento de "{{ libro.titulo }}"</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ libro.argumento }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div id="dvCreaLibro" style="display: None;" class="w3-panel w3-border">
+        <form id="dvCreaLibroForm" name="dvCreaLibroForm"
+              method="post"
+              action="">
+
+            <label for="edTitulo">Titulo</label><br>
+            <input type="text" id="edTitulo" name="edTitulo"/>
+            <br/>
+
+            <label for="edAutor">Autor</label><br>
+            <input type="text" id="edAutor" name="edAutor"/>
+            <br/>
+
+            <label for="edIsbn">Isbn</label><br>
+            <input type="text" id="edIsbn" name="edIsbn"/>
+            <br/>
+
+            <label for="edUrl">Url</label><br>
+            <input type="text" id="edUrl" name="edUrl"/>
+            <br/>
+
+            <label for="edArgumento">Argumento</label><br>
+            <textarea id="edArgumento" name="edArgumento" cols="40" rows="5"></textarea>
+
+            <p/>
+            <input type="submit" value="Guardar" style="display: inline-block">
+        </form>
+            <button href="#" onclick="cerrarFormCreaLibro()" style="display: inline-block">Cancelar</button>
+    </div>
+
+    <div id="dvCreaResenha" style="display: None;" class="w3-panel w3-border">
+        <form id="dvCreaResenhaForm" name="dvCreaResenhaForm"
+              method="post"
+              action="/guarda_resenha">
+
+            <label for="edTitulo">Titulo</label><br>
+            <input type="text" id="edTituloResenha" name="edTitulo" disabled/>
+            <br/>
+
+            <input type="text" id="edTituloResenhaOculto" name="edTitulo" style="visibility:hidden"/><br>
+
+            <label for="edUrl">Url</label><br>
+            <input type="text" id="edUrl" name="edUrl"/>
+            <p/>
+
+            <label for="edOpinion">Opinion</label><br>
+            <textarea name="edOpinion" cols="40" rows="5"></textarea>
+            <br/>
+
+            <input type="submit" value="Guardar">
+        </form>
+        <button href="#" onclick="cerrarFormCreaResenha()">Cancelar</button>
+    </div>
+
+    {% block edita %} {% endblock %}
+    <div id="dvErrores" style="font-weight: bold; color:white; background-color: red">
+        {% with msgs = get_flashed_messages() %}
+            {% if msgs %}
+                <ul>
+                    {% for msg in msgs %}
+                        <li> {{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+{% endblock %}

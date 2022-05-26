@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h1 id="saludoInicio">Bienvenido a GoodReads</h1>
+    <div id="contLoginRegistro">
+        <div id="dvLogin">
+        <h3 id="tituloLogin">Login</h3>
+            <form id="frmLogin" name="frmLogin"
+                  method="post"
+                  action="/login">
+
+                <label for="edUsername">UserName</label>
+                <input type="text" id="edUsername" name="edUsername" value="{{ username }}"/>
+                <br/>
+
+                <label for="edPassword">PassName</label>
+                <input type="password" id="edPassword" name="edPassword" value="{{ password }}"/>
+
+                <p/>
+                <input type="submit" value="Iniciar Sesion">
+            </form>
+        </div>
+
+        <div id="dvSingUp" style="display: None;">
+            <h3 id="tituloLogin">Registrarse</h3>
+            <form id="frmSingUp" name="frmSingUp"
+                  method="post"
+                  action="/sing_up">
+                <label for="edName">Nombre</label>
+                <input type="text" id="edName" name="edName" value="{{ name }}"/>
+                <br/>
+
+                <label for="edUsername">UserName</label>
+                <input type="text" id="edUsername" name="edUsername" value="{{ username }}"/>
+                <br/>
+
+                <label for="edPassword">PassName</label>
+                <input type="password" id="edPassword" name="edPassword" value="{{ password }}"/>
+
+                <p/>
+                <br>
+                <input type="submit" value="Registrarse" style="display: block;">
+            </form>
+        </div>
+
+
+        <br>
+        <a id="enlaceLogin" href="#" onclick="abrirFormLogin()" style="display: None;">Iniciar Sesión</a>
+        <a id="enlaceSingUp" href="#" onclick="abrirFormRegistro()" style="display: block;">Registrarse</a>
+
+        <div id="dvErrores" style="font-weight: bold; color:white; background-color: red">
+            {% with msgs = get_flashed_messages() %}
+                {% if msgs %}
+                    <ul>
+                        {% for msg in msgs %}
+                            <li> {{ msg }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <image id="imagenLogin" src="https://www.comunidadbaratz.com/wp-content/uploads/La-biblioteca-es-inclusion-social-e-igualdad-de-oportunidades.jpg"></image>
+
+{% endblock %}

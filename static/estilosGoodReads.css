@@ -1,0 +1,23 @@
+body, h1, h2, h3, h4, h5, h6  {
+  font-family: Roboto, sans-serif;
+}
+
+#saludoInicio, #gestionesGoodReads, #tituloLogin{
+    text-align: center;
+}
+
+#imagenLogin{
+    display: block;
+    margin: auto;
+    width: 300px;
+    margin-top: 10px;
+}
+
+#contLoginRegistro{
+    display: grid;
+    place-content: center;
+}
+
+#dvContenido{
+    margin: 20px 230px;
+}

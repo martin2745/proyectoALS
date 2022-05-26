@@ -1,0 +1,31 @@
+{% extends "listado_libros.html" %}
+{% block edita %}
+    <div id="dvEditaLibro" class="w3-panel w3-border">
+        <form id="dvEditaLibro" name="dvEditaLibro"
+              method="post"
+              action="/save_book">
+
+            <label for="edTitulo">Titulo</label>
+            <input type="text" id="edTitulo" name="edTitulo" value="{{ libro.titulo }}"/>
+            <br/>
+
+            <label for="edAutor">Autor</label>
+            <input type="text" id="edAutor" name="edAutor" value="{{ libro.autor }}"/>
+            <br/>
+
+            <label for="edIsbn">Isbn</label>
+            <input type="text" id="edIsbn" name="edIsbn" value="{{ libro.isbn }}"/>
+            <br/>
+
+            <label for="edUrl">Isbn</label>
+            <input type="text" id="edIsbn" name="edUrl" value="{{ libro.url }}"/>
+            <br/>
+
+            <label for="edArgumento">Argumento</label>
+            <textarea name="edArgumento" cols="40" rows="5"> {{ libro.argumento }}</textarea>
+
+            <p/>
+            <input type="submit" value="Guardar">
+        </form>
+    </div>
+{% endblock %}
